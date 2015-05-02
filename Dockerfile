@@ -12,14 +12,16 @@ RUN apt-get -y install htop
 ENV TERM xterm-256color
 
 # Default user
-RUN useradd ben && adduser ben sudo
-RUN mkdir -p /home/ben
-RUN chown -R ben:ben /home/ben
-RUN chsh -s /bin/bash ben
+ENV DEFAULT_USER ben
 
-WORKDIR /home/ben
+RUN useradd $DEFAULT_USER && adduser $DEFAULT_USER sudo
+RUN mkdir -p /home/$DEFAULT_USER
+RUN chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER
+RUN chsh -s /bin/bash $DEFAULT_USER
 
-USER ben
+WORKDIR /home/$DEFAULT_USER
+
+USER $DEFAULT_USER
 
 RUN mkdir .ssh
 COPY authorized_keys .ssh/authorized_keys
@@ -33,7 +35,7 @@ RUN emacs --daemon
 
 USER root
 
-VOLUME /home/ben/src
+VOLUME /home/$DEFAULT_USER/src
 
 # Tmux
 RUN apt-get -y install software-properties-common

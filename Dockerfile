@@ -2,11 +2,16 @@ FROM ubuntu:15.04
 
 RUN apt-get -y update
 
+# Basics
 RUN apt-get -y install openssh-server
 RUN apt-get -y install git emacs24-nox
 
+RUN apt-get -y install htop
+
+# Terminal
 ENV TERM xterm-256color
 
+# Default user
 RUN useradd ben && adduser ben sudo
 RUN mkdir -p /home/ben
 RUN chown -R ben:ben /home/ben
@@ -28,6 +33,15 @@ RUN emacs --daemon
 
 USER root
 
+VOLUME /home/ben/src
+
+# Tmux
+RUN apt-get -y install software-properties-common
+RUN add-apt-repository ppa:p-pisati/misc
+RUN apt-get -y update
+RUN apt-get -y install tmux tmux-mem-cpu-load
+
+# SSH
 EXPOSE 4444
 
 RUN cat /etc/ssh/sshd_config | sed -s "s/Port 22/Port 4444/g" > sshd_new

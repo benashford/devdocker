@@ -42,6 +42,9 @@ RUN add-apt-repository ppa:p-pisati/misc
 RUN apt-get -y update
 RUN apt-get -y install tmux tmux-mem-cpu-load
 
+# Utils
+RUN apt-get -y install curl
+
 # SSH
 EXPOSE 4444
 

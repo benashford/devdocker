@@ -26,12 +26,11 @@ USER $DEFAULT_USER
 RUN mkdir .ssh
 COPY authorized_keys .ssh/authorized_keys
 
+RUN git clone https://github.com/benashford/.emacs.d.git
+RUN emacs --daemon
+
 RUN git clone https://github.com/benashford/dotfiles.git
 RUN dotfiles/install.sh
-
-RUN git clone https://github.com/benashford/.emacs.d.git
-
-RUN emacs --daemon
 
 USER root
 

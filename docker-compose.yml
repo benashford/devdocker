@@ -1,0 +1,4 @@
+devbox:
+  build: .
+  ports:
+   - "2222:4444"

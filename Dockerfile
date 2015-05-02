@@ -49,5 +49,6 @@ EXPOSE 4444
 RUN cat /etc/ssh/sshd_config | sed -s "s/Port 22/Port 4444/g" > sshd_new
 RUN mv /etc/ssh/sshd_config sshd_old
 RUN mv sshd_new /etc/ssh/sshd_config
+RUN rm sshd_old
 
 CMD service ssh start && tail -f /var/log/dmesg

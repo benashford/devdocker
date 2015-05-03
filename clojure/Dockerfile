@@ -10,4 +10,9 @@ USER $DEFAULT_USER
 
 RUN lein
 
+USER $DEFAULT_USER
+
+RUN cd dotfiles && git pull && cd ..
+RUN cp -R dotfiles/.lein/* .lein
+
 USER root

@@ -43,7 +43,7 @@ RUN apt-get -y update
 RUN apt-get -y install tmux tmux-mem-cpu-load
 
 # Utils
-RUN apt-get -y install curl
+RUN apt-get -y install curl silversearcher-ag
 
 # SSH
 EXPOSE 4444

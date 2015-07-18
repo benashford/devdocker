@@ -1,7 +1,10 @@
-FROM devbox-gcc
+FROM devbox
 
-RUN apt-get install -y curl
+# Prerequisites
+RUN apt-get update
+RUN apt-get -y install autoconf bison libgdbm-dev zlib1g-dev ruby libssl-dev libreadline-dev
 
+# Ruby
 ENV RUBY_MAJOR 2.2
 ENV RUBY_VERSION 2.2.2
 ENV RUBY_DOWNLOAD_SHA256 5ffc0f317e429e6b29d4a98ac521c3ce65481bfd22a8cf845fa02a7b113d9b44
@@ -12,21 +15,17 @@ RUN mkdir -p /usr/src/ruby \
     && tar -xzf ruby.tar.gz -C /usr/src/ruby --strip-components=1 \
     && rm ruby.tar.gz
 
-RUN apt-get update
-RUN apt-get install -y bison libgdbm-dev zlib1g-dev ruby libssl-dev libreadline-dev
-RUN rm -rf /var/lib/apt/lists/*
-
 RUN cd /usr/src/ruby \
     && autoconf \
     && ./configure --disable-install-doc \
     && make -j"$(nproc)"
 RUN cd /usr/src/ruby && make install
-RUN apt-get purge -y --auto-remove bison libgdbm-dev ruby
+RUN apt-get purge -y --auto-remove ruby
 RUN rm -rf /usr/src/ruby
 
 USER $DEFAULT_USER
 
-# install things globally, for great justice
+# install things globally
 ENV GEM_HOME /home/$DEFAULT_USER/bundle
 ENV PATH $GEM_HOME/bin:$PATH
 RUN gem install bundler \

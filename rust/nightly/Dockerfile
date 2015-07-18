@@ -1,4 +1,4 @@
-FROM devbox-gcc
+FROM devbox
 
 ENV SHELL /bin/bash
 

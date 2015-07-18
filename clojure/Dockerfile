@@ -15,4 +15,6 @@ USER $DEFAULT_USER
 RUN cd dotfiles && git pull && cd ..
 RUN cp -R dotfiles/.lein/* .lein
 
+RUN cd .emacs.d && git pull && cd ..
+
 USER root

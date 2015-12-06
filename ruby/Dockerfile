@@ -1,27 +1,25 @@
 FROM devbox
 
 # Prerequisites
-RUN apt-get update
-RUN apt-get -y install autoconf bison libgdbm-dev zlib1g-dev ruby libssl-dev libreadline-dev
+RUN apt-get update && apt-get -y install autoconf bison libgdbm-dev zlib1g-dev ruby libssl-dev libreadline-dev
 
 # Ruby
 ENV RUBY_MAJOR 2.2
-ENV RUBY_VERSION 2.2.2
-ENV RUBY_DOWNLOAD_SHA256 5ffc0f317e429e6b29d4a98ac521c3ce65481bfd22a8cf845fa02a7b113d9b44
+ENV RUBY_VERSION 2.2.3
+ENV RUBY_DOWNLOAD_SHA256 df795f2f99860745a416092a4004b016ccf77e8b82dec956b120f18bdc71edce
 
 RUN mkdir -p /usr/src/ruby \
     && curl -fSL -o ruby.tar.gz "http://cache.ruby-lang.org/pub/ruby/$RUBY_MAJOR/ruby-$RUBY_VERSION.tar.gz" \
     && echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.gz" | sha256sum -c - \
     && tar -xzf ruby.tar.gz -C /usr/src/ruby --strip-components=1 \
-    && rm ruby.tar.gz
-
-RUN cd /usr/src/ruby \
+    && rm ruby.tar.gz \
+    && cd /usr/src/ruby \
     && autoconf \
     && ./configure --disable-install-doc \
-    && make -j"$(nproc)"
-RUN cd /usr/src/ruby && make install
-RUN apt-get purge -y --auto-remove ruby
-RUN rm -rf /usr/src/ruby
+    && make -j"$(nproc)" \
+    && cd /usr/src/ruby && make install \
+    && apt-get purge -y --auto-remove ruby \
+    && rm -rf /usr/src/ruby
 
 USER $DEFAULT_USER
 

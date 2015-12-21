@@ -28,7 +28,7 @@ RUN git clone https://github.com/benashford/.emacs.d.git && \
 
 # Dotfiles
 RUN git clone https://github.com/benashford/dotfiles.git && \
-    dotfiles/install.sh
+    dotfiles/ubuntu/install.sh
 
 USER root
 

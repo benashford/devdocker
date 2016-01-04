@@ -1,7 +1,7 @@
 FROM ubuntu:15.10
 
 # Basics
-RUN apt-get -y update && apt-get -y install curl software-properties-common tmux git htop openssh-server
+RUN apt-get -y update && apt-get -y install curl software-properties-common cmake g++ tmux git htop openssh-server
 
 # Default user
 ENV DEFAULT_USER ben

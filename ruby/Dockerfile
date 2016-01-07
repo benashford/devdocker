@@ -4,9 +4,9 @@ FROM devbox
 RUN apt-get update && apt-get -y install autoconf bison libgdbm-dev zlib1g-dev ruby libssl-dev libreadline-dev
 
 # Ruby
-ENV RUBY_MAJOR 2.2
-ENV RUBY_VERSION 2.2.3
-ENV RUBY_DOWNLOAD_SHA256 df795f2f99860745a416092a4004b016ccf77e8b82dec956b120f18bdc71edce
+ENV RUBY_MAJOR 2.3
+ENV RUBY_VERSION 2.3.0
+ENV RUBY_DOWNLOAD_SHA256 ba5ba60e5f1aa21b4ef8e9bf35b9ddb57286cb546aac4b5a28c71f459467e507
 
 RUN mkdir -p /usr/src/ruby \
     && curl -fSL -o ruby.tar.gz "http://cache.ruby-lang.org/pub/ruby/$RUBY_MAJOR/ruby-$RUBY_VERSION.tar.gz" \

@@ -1,20 +1,25 @@
 FROM ubuntu:15.10
 
 # Basics
-RUN apt-get -y update && apt-get -y install curl software-properties-common cmake g++ tmux git htop openssh-server
+RUN apt-get -y update && \
+    apt-get -y upgrade && \
+    apt-get -y install curl software-properties-common cmake g++ tmux git htop openssh-server
 
 # Default user
 ENV DEFAULT_USER ben
 
-RUN useradd $DEFAULT_USER && adduser $DEFAULT_USER sudo && \
-    mkdir -p /home/$DEFAULT_USER && \
-    chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER && \
-    chsh -s /bin/bash $DEFAULT_USER
+RUN useradd -s /bin/bash -m $DEFAULT_USER
 
 WORKDIR /home/$DEFAULT_USER
 
+USER $DEFAULT_USER
+
 RUN mkdir .ssh
 COPY authorized_keys .ssh/authorized_keys
+
+USER root
+RUN chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER && \
+    chmod 400 .ssh/authorized_keys
 
 # Emacs
 RUN apt-get -y install emacs-nox silversearcher-ag

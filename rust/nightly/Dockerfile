@@ -1,5 +1,6 @@
-FROM devbox
+FROM devbox-rust
 
-ENV SHELL /bin/bash
+ENV PATH $PATH:/home/ben/.cargo/bin
 
-RUN curl -s https://static.rust-lang.org/rustup.sh | sh -s -- -y --disable-sudo --channel=nightly
+RUN rustup toolchain install nightly && \
+    rustup default nightly

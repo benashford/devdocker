@@ -1,4 +1,4 @@
-FROM devbox-anaconda
+FROM devbox-jupyter
 
 RUN add-apt-repository -y ppa:staticfloat/juliareleases && \
     apt-get update && \
